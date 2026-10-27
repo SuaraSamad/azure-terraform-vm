@@ -1,0 +1,17 @@
+#cloud-config
+# Runs once on the VM's first boot: installs nginx and writes a test page.
+package_update: true
+packages:
+  - nginx
+write_files:
+  - path: /var/www/html/index.html
+    content: |
+      <!DOCTYPE html>
+      <html>
+        <head><title>Deployed with Terraform</title></head>
+        <body style="font-family: sans-serif; text-align: center; padding-top: 20vh;">
+          <h1>Hello from an Azure VM built with Terraform</h1>
+        </body>
+      </html>
+runcmd:
+  - systemctl enable --now nginx
