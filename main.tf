@@ -25,7 +25,8 @@ resource "azurerm_resource_group" "main" {
 }
 
 # ---------------------------------------------------------------------------
-# Networking the VM needs: a network, a subnet, a public IP and a firewall.
+# Networking the VM needs: a network, a subnet, a public IP and a firewall
+# that only lets SSH in.
 # ---------------------------------------------------------------------------
 
 resource "azurerm_virtual_network" "main" {
@@ -70,17 +71,6 @@ resource "azurerm_network_security_group" "main" {
     destination_address_prefix = "*"
   }
 
-  security_rule {
-    name                       = "Allow-HTTP"
-    priority                   = 110
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
 }
 
 resource "azurerm_network_interface" "main" {
@@ -103,8 +93,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
 }
 
 # ---------------------------------------------------------------------------
-# The virtual machine: Ubuntu 22.04, SSH key login only, nginx installed on
-# first boot by cloud-init.
+# The virtual machine: a small Ubuntu 22.04 server you log in to with SSH.
 # ---------------------------------------------------------------------------
 
 resource "azurerm_linux_virtual_machine" "main" {
@@ -115,7 +104,6 @@ resource "azurerm_linux_virtual_machine" "main" {
   admin_username                  = var.admin_username
   disable_password_authentication = true
   network_interface_ids           = [azurerm_network_interface.main.id]
-  custom_data                     = base64encode(file("${path.module}/scripts/cloud-init.yaml"))
   tags                            = var.tags
 
   admin_ssh_key {

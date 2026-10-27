@@ -35,7 +35,7 @@ variable "ssh_public_key_path" {
 }
 
 variable "allowed_ssh_source" {
-  description = "Who may SSH in: \"*\" for anywhere, or a CIDR such as your own IP/32 (safer)."
+  description = "Who may SSH in: \"*\" for anywhere, or your own IP followed by /32 to lock it down."
   type        = string
   default     = "*"
 }

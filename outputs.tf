@@ -17,8 +17,3 @@ output "ssh_command" {
   description = "Command to connect to the VM."
   value       = "ssh ${var.admin_username}@${azurerm_public_ip.main.ip_address}"
 }
-
-output "website_url" {
-  description = "nginx test page served by the VM."
-  value       = "http://${azurerm_public_ip.main.ip_address}"
-}
