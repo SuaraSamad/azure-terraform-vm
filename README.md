@@ -1,4 +1,4 @@
-# Beginner Azure VM with Terraform
+# Azure Linux VM with Terraform
 
 A simple Terraform setup that creates one small Ubuntu virtual machine in Azure and everything it needs so you can log in to it with SSH.
 
