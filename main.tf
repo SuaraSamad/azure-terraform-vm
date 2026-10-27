@@ -42,6 +42,12 @@ resource "azurerm_subnet" "main" {
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.1.0/24"]
+
+  # The subnet's own settings don't include a region, so without this Terraform
+  # would keep the old subnet when a location change rebuilds the network.
+  lifecycle {
+    replace_triggered_by = [azurerm_virtual_network.main.id]
+  }
 }
 
 resource "azurerm_public_ip" "main" {
