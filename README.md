@@ -53,4 +53,4 @@ ssh azureuser@<public_ip_address>     # or copy the ssh_command output
 terraform destroy
 ```
 
-If `Standard_B1s` isn't available in your region, set `vm_size` to `Standard_B2s` or pick another region.
+The default region is `uksouth`, because East US had no capacity for `Standard_B1s`. If it isn't available in your region, set `vm_size` to `Standard_B2s` or pick another region.
